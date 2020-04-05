@@ -12,7 +12,7 @@ OBJDUMP        = $(CROSS_COMPILE)objdump
 
 export AS LD CC CPP AR NM STRIP OBJCOPY OBJDUMP  
 
-OBJECTDIR = /home/mislike/my_all/my-fs/rootfs/root/image_player/ 
+OBJECTDIR = /home/mislike/my_all/my-fs/rootfs/root/e-book/ 
 
 TOPDIR := $(shell pwd)
 export TOPDIR   
