@@ -37,9 +37,9 @@ static T_EncodingOpr g_tUtf8EncodingOpr = {
 
 static int isUtf8Coding(unsigned char *pucBufHead)
 {
-	unsigned char aStrUtf8[] = {0xEF, 0xBB, 0xBF, 0x00};
+	const char aStrUtf8[] = {0xEF, 0xBB, 0xBF, 0x00};
 
-	if (strncmp(pucBufHead, aStrUtf8, 3) == 0)
+	if (strncmp((char *)pucBufHead, aStrUtf8, strlen(aStrUtf8)) == 0)
 	{
 		/* UTF-8 */
 		return 0;
@@ -84,6 +84,7 @@ static int GetUtf8CodeFrmBuf(unsigned char *pucBufStart,
 	 * 如果最高位为0， 说明为ASCII码
 	 * 如果前两位为1， 说明是字节编码的第一个字节
 	 * 如果前两位为10，说明是字节编码的中间字节
+	 * 如果前n(n<=4)位为1， 说明有有n个字节的数据
 	 */
 
 	int i;	
@@ -131,7 +132,7 @@ static int GetUtf8CodeFrmBuf(unsigned char *pucBufStart,
 int  Utf8EncodingInit(void)
 {
 	AddFontOprForEncoding(&g_tUtf8EncodingOpr, GetFontOpr("freetype"));
-	AddFontOprForEncoding(&g_tUtf8EncodingOpr, GetFontOpr("ascii"));
+	//AddFontOprForEncoding(&g_tUtf8EncodingOpr, GetFontOpr("ascii"));
 	return RegisterEncodingOpr(&g_tUtf8EncodingOpr);
 }
 

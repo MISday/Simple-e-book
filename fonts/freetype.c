@@ -12,14 +12,14 @@
 
 ***********************************************************************/
 
-#include <config.h>
-#include <fonts_manager.h>
-#include <ft2build.h>
+#include "config.h"
+#include "fonts_manager.h"
+#include "ft2build.h"
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 
 static FT_Library g_library;
-static FT_Face g_face;
+static FT_Face g_tFace;
 static FT_GlyphSlot g_tSlot;
 
 static int FreeTypeFontInit(char *pcFontFile, unsigned int dwFontSize);	
@@ -43,7 +43,7 @@ static int FreeTypeFontInit(char *pcFontFile, unsigned int dwFontSize)
 	}
 
 	//	获取字体对象
-	iError = FT_New_Face(g_library, pcFontFile, 0, &g_face);
+	iError = FT_New_Face(g_library, pcFontFile, 0, &g_tFace);
 	if (iError == FT_Err_Unknown_File_Format)
 	{
 		DBG_PRINTF("The font file can't be known\n");
@@ -58,8 +58,8 @@ static int FreeTypeFontInit(char *pcFontFile, unsigned int dwFontSize)
 	g_tSlot = g_tFace->glyph;
 
 	//	设置字体大小
-	iError = FT_Set_Pixel_Sizes(face, 24, 0);
-	if iError
+	iError = FT_Set_Pixel_Sizes(g_tFace, 24, 0);
+	if (iError)
 	{
 		DBG_PRINTF("FT_Set_Pixel_Sizes failed\n");
 		goto err2;
@@ -68,7 +68,7 @@ static int FreeTypeFontInit(char *pcFontFile, unsigned int dwFontSize)
 	return 0;
 	
 err2:
-	FT_Done_Face(g_face);
+	FT_Done_Face(g_tFace);
 	
 err1:
 	FT_Done_FreeType(g_library);

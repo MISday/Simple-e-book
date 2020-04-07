@@ -20,9 +20,11 @@
 #include <sys/mman.h>
 #include <sys/ioctl.h>
 #include <errno.h>
+#include <unistd.h>
+#include <string.h>
 
-#include "disp_manager.h"
-
+#include "config.h"
+#include "display_manager.h"
 
 static int 				g_fd;
 static struct fb_var_screeninfo g_tFBVar;
@@ -71,7 +73,7 @@ static int	FBDeviceInit(void)
 		g_tFBVar.yres_virtual * \
 		g_tFBVar.bits_per_pixel / 8;
 
-	g_puiFBMem = mmap(NULL, len, PROT_READ | PROT_WRITE, MAP_SHARED, fd_fb, 0);
+	g_puiFBMem = mmap(NULL, g_len, PROT_READ | PROT_WRITE, MAP_SHARED, g_fd, 0);
     if (MAP_FAILED == g_puiFBMem)
     {
 		DBG_PRINTF("can't mmap\n");
@@ -155,10 +157,14 @@ static int FBCleanScreen(unsigned int dwBackColor)
 			return -1;
 		}		
 	}
+
+	return 0;
 }
 
 int FBInit(void)
 {
 	RegisterDispOpr(&g_tFBDispOpr);
+
+	return 0;
 }
 

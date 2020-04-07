@@ -20,16 +20,16 @@ export TOPDIR
 FREETYPE_PATH := /usr/local/arm/arm-2009q3/arm-none-linux-gnueabi/libc/usr/include/freetype2/
 
 CFLAGS := -Wall -O2 -g -DDEBUG
-CFLAGS += -I $(FREETYPE_PATH) $(TOPDIR)/include 
-CFLAGS += -finput-charset=UTF-8  -fexec-charset=GBK
+CFLAGS += -I $(FREETYPE_PATH) 
+CFLAGS += -I $(TOPDIR)/include
+#CFLAGS += -finput-charset=UTF-8  -fexec-charset=GBK
 
 LDFLAGS := -lm -lfreetype 
 export CFLAGS LDFLAGS
 
-TARGET := digital_photo_frame
+TARGET := e-book
 
 obj-y += main.o
-
 obj-y += display/
 obj-y += draw/
 obj-y += encoding/

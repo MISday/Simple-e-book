@@ -12,6 +12,11 @@
 
 ***********************************************************************/
 
+#include <string.h>
+
+#include "config.h"
+#include "display_manager.h"
+
 //	用于管理Display设备的无头结点链表
 static PT_DispOpr g_ptDispOprHead;
 

@@ -31,7 +31,7 @@ typedef struct EncodingOpr
 	struct EncodingOpr *ptNext;
 } T_EncodingOpr, *PT_EncodingOpr;
 
-int RegisterEncodingOpr(PT_EncodingOpr ptEncodingOpr, );
+int RegisterEncodingOpr(PT_EncodingOpr ptEncodingOpr);
 
 void ShowEncodingOpr(void);
 

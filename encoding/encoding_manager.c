@@ -109,11 +109,63 @@ PT_EncodingOpr SelectEncodingOprForFile(unsigned char *pucFileBufHead)
 
 int AddFontOprForEncoding(PT_EncodingOpr ptEncodingOpr, PT_FontOpr ptFontOpr)
 {
+	PT_FontOpr	ptTemp;
 
+	if (!ptEncodingOpr || !ptFontOpr)
+	{	
+		return -1; 
+	}
+	else
+	{
+		ptTemp = malloc(sizeof(T_FontOpr));
+		if (!ptTemp)
+		{
+			return -1;
+		}
+		else
+		{
+			memcpy(ptTemp, ptFontOpr, sizeof(T_FontOpr));
+			ptTemp->ptNext = ptEncodingOpr->ptFontOprSupportedHead;		//	尾插
+			ptEncodingOpr->ptFontOprSupportedHead = ptTemp;
+			return 0;
+		}
+	}
 }
 
 int DelFontOprFrmEncoding(PT_EncodingOpr ptEncodingOpr, PT_FontOpr ptFontOpr)
 {
+	PT_FontOpr	ptTemp;	
+	PT_FontOpr	ptPre;	
+
+
+	if (!ptEncodingOpr || !ptFontOpr)
+	{	
+		return -1; 
+	}
+
+	ptTemp = ptEncodingOpr->ptFontOprSupportedHead;
+	if (strcmp(ptTemp->name, ptFontOpr->name) == 0)
+	{
+		ptEncodingOpr->ptFontOprSupportedHead = ptTemp->ptNext;
+		free(ptTemp);
+		return 0;
+	}
+
+	ptPre 	=	ptEncodingOpr->ptFontOprSupportedHead;
+	ptTemp 	=	ptPre->ptNext;
+	while (ptTemp)
+	{
+		if (strcmp(ptTemp->name, ptFontOpr->name) == 0)
+		{
+			ptPre->ptNext = ptTemp->ptNext;
+			free(ptTemp);
+			return 0;
+		}
+		ptTemp = ptTemp->ptNext;
+		ptPre = ptPre->ptNext;
+	}
+	
+	return -1;
 
 }
 

@@ -12,6 +12,11 @@
 
 ***********************************************************************/
 
+#include <string.h>
+
+#include "config.h"
+#include "fonts_manager.h"
+
 //	用于管理Display设备的无头结点链表
 static PT_FontOpr g_ptFontOprHead;
 
@@ -91,7 +96,7 @@ PT_FontOpr GetFontOpr(char *pcName)
 		if (strcmp(ptTmp->name, pcName) == 0)
 			return ptTmp;
 
-		ptTmp = ptTmp->next;
+		ptTmp = ptTmp->ptNext;
 	}
 	
 	return NULL;

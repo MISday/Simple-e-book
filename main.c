@@ -12,19 +12,50 @@
 
 ***********************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <wchar.h>
-#include <string.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <linux/fb.h>
-#include <sys/mman.h>
-#include <sys/ioctl.h>
 #include <unistd.h>
+#include <getopt.h>
 
+#include "config.h"
+#include "draw.h"
+#include "encoding_manager.h"
+#include "display_manager.h"
+#include "fonts_manager.h"
+
+static struct option long_options[] = 
+{
+	{"size", 	required_argument,	0,	's'},
+	{"freetype",optional_argument,	0,	'f'},
+	{0,			0,					0,	0},
+};
+
+int main(int argc, char *argv[])
+{
+	int iError;
+
+	//iError = getopt_long(argc, argv, "", );
+
+	iError = DisplayInit();
+	if (iError)
+	{
+		printf("DisplayInit error!\n");
+		return -1;
+	}
+
+	iError = FontsInit();
+	if (iError)
+	{
+		printf("FontsInit error!\n");
+		return -1;
+	}
+
+	iError = EncodingInit();
+	if (iError)
+	{
+		printf("EncodingInit error!\n");
+		return -1;
+	}
+
+	return 0;
+}
 
 /* EOF */
